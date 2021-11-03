@@ -23,7 +23,23 @@ def solve(rows):
         if soln:
             return soln
 
+def display(rows):
+    st = ' '
+    print('   '+'-'*31)
+    for row in rows:
+        x='  | '*row+'  | Q'+' |  '*(8-row)
+        print(x)
+        print('   '+'-'*31)
 
-print(solve([]))
 
 
+
+    '''
+    for ind, row in enumerate(rows):
+        st = '| |'*row +'|X|'+'| |'*(8-row)
+        print(st)
+        print('-'*30)
+    '''
+s = solve([])
+print(s)
+display(s)
