@@ -20,10 +20,11 @@ for i in range(8):
 
 
 def solve(x,y,path=[]):
-    if len(path) > 62:
-        return path
-    #assert not (x,y) in path###########
     new_path = path+[(x,y)]
+    if len(path) > 62:
+        return new_path
+    #assert not (x,y) in path###########
+
     legal = [_ for _ in legals[(x,y)]]# if not _ in path]
     #legal = list(set(legal))
     legal.sort(key = lambda _: len(legals[_]))
