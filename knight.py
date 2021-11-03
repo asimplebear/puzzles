@@ -15,37 +15,32 @@ for i in range(8):
         for x,y in d:
             if 0<=i+x<8 and 0<=j+y<8:
                 h.append((i+x,j+y))
-        h.sort(key = lambda _: len(_))#####
         legals[(i,j)] = h
 
 
 def solve(x,y,path=[]):
+
     new_path = path+[(x,y)]
-    if len(path) > 62:
+
+    if len(new_path) == 64:
         return new_path
-    #assert not (x,y) in path###########
 
     legal = [_ for _ in legals[(x,y)]]# if not _ in path]
-    #legal = list(set(legal))
+
     legal.sort(key = lambda _: len(legals[_]))
-    #input(legal)
+
     for i,j in legal:
-        #print(legal, i, j)##################
         if (i,j) in path:
             continue
-        print(legal,i,j)
         s = solve(i,j,new_path)
-        
-        if s: 
-            print(len(s))
+        if s:
             return s
 
+
 s = solve(4,5,[])
-#print(s, len(s))
-dd = {_: '0' for _ in sqrs}
-for i,sq in enumerate(s):
-    dd[sq] = i
-    
+soln = {sqr: ind for ind, sqr in enumerate(s)}
+
+
 def display(brd):
     print(' '+'-'*30)
     for i in range(8):
@@ -56,4 +51,4 @@ def display(brd):
         print('-'*31)
 
 
-display(dd)
+display(soln)
