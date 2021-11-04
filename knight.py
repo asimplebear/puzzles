@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
+
+#upshot of this iblock is to get "legals" dictionary
+# { .. (x,y) : [ (a,b) ]..}  keys are coordinates
+#of square and values are list of squares a
+#knight's move away
 sqrs = [(i,j) for i in range(8) for j in range(8)]
-
-brd = {s: str(s[0]*8 + s[1]) for s in sqrs}
-brd = {s: '' for s in sqrs}
-
 legals = {}
 ot = [-1,1,-2,2]
 d = [(x,y) for x in ot for y in ot if (x+y)%2]
-
 for i in range(8):
     for j in range(8):
         h = []
@@ -25,7 +25,7 @@ def solve(x,y,path=[]):
     if len(new_path) == 64:
         return new_path
 
-    legal = [_ for _ in legals[(x,y)]]# if not _ in path]
+    legal = [_ for _ in legals[(x,y)] if not _ in path]
 
     legal.sort(key = lambda _: len(legals[_]))
 
@@ -37,11 +37,8 @@ def solve(x,y,path=[]):
             return s
 
 
-s = solve(4,5,[])
-soln = {sqr: ind for ind, sqr in enumerate(s)}
-
-
 def display(brd):
+
     print(' '+'-'*30)
     for i in range(8):
         l = ['{:2}'.format(brd[(i,j)]) for j in range(8)]
@@ -51,4 +48,14 @@ def display(brd):
         print('-'*31)
 
 
-display(soln)
+if __name__ == '__main__':
+
+    import sys
+    #optional coordinates of square to start on
+    x, y = 0, 0
+    if len(sys.argv) == 3:
+        [x, y] = sys.argv[1:]
+
+    s = solve(int(x), int(y), [])
+    soln = {sqr: ind for ind, sqr in enumerate(s)}
+    display(soln)
