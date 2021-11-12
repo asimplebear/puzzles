@@ -55,10 +55,53 @@ def display(rows):
         print('   '+'-'*31)
 
 
+def symmetries(rows):
+    '''
+    dihedral group on chess board
+    to eliminate symmetric solutions
+    '''
+    def rot(rows):
+        ret = ['@']*8
+        for i in range(8):
+            ret[rows[i]]=7-i
+        return ret
+
+
+    def flip(rows):
+        ret=['@']*8
+        for i in range(8):
+            ret[rows[i]]=i
+        return ret
+
+    y = [_ for _ in rows]
+    for n in range(1,4):
+        y = rot(y)
+        yield y
+    y = [_ for _ in rows]
+    y = flip(y)
+    yield y
+    for n in range(1,4):
+        y = rot(y)
+        yield(y)
+
+
+
+
 if __name__ == '__main__':
+
     _, solns = solve_all([])
-    print(len(solns), 'solutions')
+
+    uniques = []
     for soln in solns:
+        there = False
+        for sol in symmetries(soln):
+            if sol in uniques:
+                there = True
+        if not there:
+            uniques.append(soln)
+
+    print(len(uniques), 'solutions')
+    for soln in uniques:
         display(soln)
         if input('..') != '': break
 
